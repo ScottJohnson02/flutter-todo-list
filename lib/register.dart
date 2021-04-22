@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'rounded_button.dart';
+import 'package:flutter_todo_list/rounded_button.dart';
 
 //code for designing the UI of our text field where the user writes his email id or password
 
@@ -22,12 +22,12 @@ const kTextFieldDecoration = InputDecoration(
   ),
 );
 
-class RegistrationScreen extends StatefulWidget {
+class Registration extends StatefulWidget {
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _RegistrationState createState() => _RegistrationState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegistrationState extends State<Registration> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'rounded_button.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class Welcome extends StatefulWidget {
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _WelcomeState createState() => _WelcomeState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

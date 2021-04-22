@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 User loggedinUser;
 
-class HomeScreen extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeState extends State<Home> {
   final _auth = FirebaseAuth.instance;
 
   void initState() {

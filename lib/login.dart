@@ -21,14 +21,14 @@ const kTextFieldDecoration = InputDecoration(
       borderRadius: BorderRadius.all(Radius.circular(32.0)),
     ));
 
-class LoginScreen extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginState createState() => _LoginState();
 }
 
 final _auth = FirebaseAuth.instance;
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginState extends State<Login> {
   String email;
   String password;
   bool showSpinner = false;

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'welcome.dart';
+import 'home.dart';
+import 'login.dart';
+import 'register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: 'welcome_screen',
       routes: {
-        'welcome_screen': (context) => WelcomeScreen(),
-        'registration_screen': (context) => RegistrationScreen(),
-        'login_screen': (context) => LoginScreen(),
-        'home_screen': (context) => HomeScreen()
+        'welcome_screen': (context) => Welcome(),
+        'registration_screen': (context) => Registration(),
+        'login_screen': (context) => Login(),
+        'home_screen': (context) => Home()
       },
     );
   }
