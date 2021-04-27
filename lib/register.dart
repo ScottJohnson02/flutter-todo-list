@@ -51,6 +51,7 @@ class _RegistrationState extends State<Registration> {
                     email = value;
                     //Pass to home page.
                   },
+                  style: TextStyle(color: Colors.white),
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your email')),
               SizedBox(
@@ -63,6 +64,7 @@ class _RegistrationState extends State<Registration> {
                     password = value;
                     //Pass to home page.
                   },
+                  style: TextStyle(color: Colors.white),
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your Password')),
               SizedBox(

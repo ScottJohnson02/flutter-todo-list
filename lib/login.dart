@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 
 const kTextFieldDecoration = InputDecoration(
     hintText: 'Enter a value',
-    hintStyle: TextStyle(color: Colors.grey),
+    hintStyle: TextStyle(color: Colors.white),
     contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(32.0)),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+      borderSide: BorderSide(color: Colors.lightGreenAccent, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(32.0)),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+      borderSide: BorderSide(color: Colors.lightGreenAccent, width: 2.0),
       borderRadius: BorderRadius.all(Radius.circular(32.0)),
     ));
 
@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -51,6 +51,7 @@ class _LoginState extends State<Login> {
                     email = value;
                     //Do something with the user input.
                   },
+                  style: TextStyle(color: Colors.white),
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Enter your email',
                   )),
@@ -64,13 +65,14 @@ class _LoginState extends State<Login> {
                     password = value;
                     //Do something with the user input.
                   },
+                  style: TextStyle(color: Colors.white),
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your password.')),
               SizedBox(
                 height: 24.0,
               ),
               RoundedButton(
-                  colour: Colors.lightBlueAccent,
+                  colour: Colors.green,
                   title: 'Log In',
                   onPressed: () async {
                     setState(() {
