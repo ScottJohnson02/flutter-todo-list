@@ -3,21 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_todo_list/rounded_button.dart';
 
-//code for designing the UI of our text field where the user writes his email id or password
+// General UX styling.
 
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
-  hintStyle: TextStyle(color: Colors.grey),
+  hintStyle: TextStyle(color: Colors.white),
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+    borderSide: BorderSide(color: Colors.lightGreenAccent, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+    borderSide: BorderSide(color: Colors.lightGreenAccent, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
@@ -35,7 +35,7 @@ class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -49,7 +49,7 @@ class _RegistrationState extends State<Registration> {
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     email = value;
-                    //Do something with the user input.
+                    //Pass to home page.
                   },
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your email')),
@@ -61,7 +61,7 @@ class _RegistrationState extends State<Registration> {
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     password = value;
-                    //Do something with the user input.
+                    //Pass to home page.
                   },
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your Password')),
@@ -69,7 +69,7 @@ class _RegistrationState extends State<Registration> {
                 height: 24.0,
               ),
               RoundedButton(
-                colour: Colors.blueAccent,
+                colour: Colors.green,
                 title: 'Register',
                 onPressed: () async {
                   setState(() {
