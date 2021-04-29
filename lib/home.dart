@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white),
                 ),
                 TextField(
-                    obscureText: true,
+                    obscureText: false,
                     textAlign: TextAlign.center,
                     onChanged: (value) {
                       task = value;
