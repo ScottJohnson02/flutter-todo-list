@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_todo_list/rounded_button.dart';
 
 // General UX styling.
+final db = FirebaseFirestore.instance;
 
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
@@ -80,7 +82,13 @@ class _RegistrationState extends State<Registration> {
                   try {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
+
                     if (newUser != null) {
+                      db
+                          .collection('users')
+                          .doc(newUser.user.uid)
+                          .set({'username': 'bob'});
+
                       Navigator.pushNamed(context, 'home_screen');
                     }
                   } catch (e) {
