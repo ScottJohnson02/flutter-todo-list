@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 User loggedinUser;
+String loggedinUserEmail;
 
 class Home extends StatefulWidget {
   @override
@@ -19,9 +20,10 @@ class _HomeState extends State<Home> {
   //using this function you can use the credentials of the user
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedinUser = user;
+        loggedinUserEmail = user.email;
       }
     } catch (e) {
       print(e);
@@ -48,7 +50,7 @@ class _HomeState extends State<Home> {
       ),
       body: Center(
         child: Text(
-          "Welcome User",
+          "Welcome $loggedinUserEmail",
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ),
