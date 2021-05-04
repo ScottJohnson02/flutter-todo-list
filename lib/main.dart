@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'welcome.dart';
 import 'home.dart';
 import 'login.dart';
+import 'tasks.dart';
 import 'register.dart';
 
 Future<void> main() async {
@@ -16,13 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: 'welcome_screen',
+      initialRoute: 'welcome',
       routes: {
         'tasks': (context) => Tasks(),
         'welcome': (context) => Welcome(),
         'register': (context) => Registration(),
         'login': (context) => Login(),
-        'home': (context) => Home()
+        'home': (context) => Home(),
       },
     );
   }

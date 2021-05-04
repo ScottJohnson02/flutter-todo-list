@@ -89,7 +89,7 @@ class _RegistrationState extends State<Registration> {
                           .doc(newUser.user.uid)
                           .set({'username': 'bob'});
 
-                      Navigator.pushNamed(context, 'home_screen');
+                      Navigator.pushNamed(context, 'home');
                     }
                   } catch (e) {
                     print(e);
