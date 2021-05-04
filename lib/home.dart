@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:uuid/uuid.dart';
+import 'tasks.dart';
 
 final db = FirebaseFirestore.instance;
-final _formKey = GlobalKey<FormState>();
+GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 final taskController = TextEditingController();
 
 var uuid = Uuid();
@@ -102,7 +103,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Form(
-                              key: _formKey,
+                              key: formKey2,
                               child: Container(
                                   width: 500,
                                   height: 150,
@@ -172,7 +173,11 @@ class _HomeState extends State<Home> {
                             style: TextStyle(color: Colors.white)))),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, 'tasks');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Tasks(id: loggedinUser.uid)));
                     },
                     child: Container(
                         margin: EdgeInsets.all(10),

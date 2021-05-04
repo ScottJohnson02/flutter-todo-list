@@ -87,7 +87,7 @@ class _RegistrationState extends State<Registration> {
                       db
                           .collection('users')
                           .doc(newUser.user.uid)
-                          .set({'username': 'bob'});
+                          .set({'username': newUser.user.email});
 
                       Navigator.pushNamed(context, 'home');
                     }
