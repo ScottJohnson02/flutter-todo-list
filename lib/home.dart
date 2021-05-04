@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_field/date_field.dart';
 
 final db = FirebaseFirestore.instance;
 User loggedinUser;
 String loggedinUserEmail;
 String task;
+DateTime dueDate;
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
-  hintStyle: TextStyle(color: Colors.white),
+  hintStyle: TextStyle(color: Colors.black),
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightGreenAccent, width: 1.0),
+    borderSide: BorderSide(color: Colors.green, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightGreenAccent, width: 2.0),
+    borderSide: BorderSide(color: Colors.green, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
@@ -53,7 +55,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.close),
@@ -74,25 +75,48 @@ class _HomeState extends State<Home> {
             color: Colors.black,
             alignment: Alignment.center,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Welcome $loggedinUserEmail",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                TextField(
-                    obscureText: false,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      task = value;
-                    },
-                    style: TextStyle(color: Colors.white),
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your Task')),
+                Container(
+                    alignment: Alignment.center,
+                    width: 500,
+                    height: 50,
+                    child: Text(
+                      "Welcome $loggedinUserEmail",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )),
+                Container(
+                    width: 500,
+                    height: 150,
+                    color: Colors.grey,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextField(
+                              obscureText: false,
+                              textAlign: TextAlign.left,
+                              onChanged: (value) {
+                                task = value;
+                              },
+                              style: TextStyle(color: Colors.black),
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: 'Enter your Task')),
+                          DateTimeFormField(
+                            decoration: kTextFieldDecoration.copyWith(
+                                hintText: 'Enter Due Date'),
+                            mode: DateTimeFieldPickerMode.dateAndTime,
+                            autovalidateMode: AutovalidateMode.always,
+                            validator: (e) => (e?.day ?? 0) == 1
+                                ? 'Please not the first day'
+                                : null,
+                            onDateSelected: (DateTime value) {
+                              dueDate = value;
+                            },
+                          )
+                        ])),
                 GestureDetector(
                     onTap: () {
                       db
@@ -100,9 +124,21 @@ class _HomeState extends State<Home> {
                           .doc(loggedinUser.uid)
                           .collection('tasks')
                           .doc(task)
-                          .set({'title': task, 'time': new DateTime.now()});
+                          .set({
+                        'title': task,
+                        'time': new DateTime.now(),
+                        'due date': dueDate
+                      }).then((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Successfully Added')));
+                      }).catchError((onError) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(onError)));
+                      });
                     },
                     child: Container(
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             border: Border.all(width: 2, color: Colors.green),
                             borderRadius:
@@ -111,7 +147,10 @@ class _HomeState extends State<Home> {
                         width: 200,
                         height: 50,
                         child: Text('Add New Task',
-                            style: TextStyle(color: Colors.white))))
+                            style: TextStyle(color: Colors.white)))),
+                Column(
+                  children: [],
+                )
               ],
             )),
       ),
