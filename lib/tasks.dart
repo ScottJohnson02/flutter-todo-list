@@ -56,22 +56,7 @@ class _TasksState extends State<Tasks> {
               height: 25000,
               child: Column(
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, 'home');
-                      },
-                      child: Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.green),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(32.0))),
-                          alignment: Alignment.center,
-                          width: 200,
-                          height: 50,
-                          child: Text('Add Task / Home',
-                              style: TextStyle(color: Colors.black)))),
+
                   _showDrivers()
                 ],
               )),
