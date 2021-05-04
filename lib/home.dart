@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 
 final db = FirebaseFirestore.instance;
+final _formKey = GlobalKey<FormState>();
+final taskController = TextEditingController();
+
 User loggedinUser;
 String loggedinUserEmail;
 String task;
@@ -95,27 +98,41 @@ class _HomeState extends State<Home> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          TextField(
-                              obscureText: false,
-                              textAlign: TextAlign.left,
-                              onChanged: (value) {
-                                task = value;
-                              },
-                              style: TextStyle(color: Colors.black),
-                              decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Enter your Task')),
-                          DateTimeFormField(
-                            decoration: kTextFieldDecoration.copyWith(
-                                hintText: 'Enter Due Date'),
-                            mode: DateTimeFieldPickerMode.dateAndTime,
-                            autovalidateMode: AutovalidateMode.always,
-                            validator: (e) => (e?.day ?? 0) == 1
-                                ? 'Please not the first day'
-                                : null,
-                            onDateSelected: (DateTime value) {
-                              dueDate = value;
-                            },
-                          )
+                          Form(
+                              key: _formKey,
+                              child: Container(
+                                  width: 500,
+                                  height: 150,
+                                  child: Column(
+                                    children: [
+                                      TextFormField(
+                                          controller: taskController,
+                                          obscureText: false,
+                                          textAlign: TextAlign.left,
+                                          onChanged: (value) {
+                                            task = value;
+                                          },
+                                          style: TextStyle(color: Colors.black),
+                                          decoration:
+                                              kTextFieldDecoration.copyWith(
+                                                  hintText: 'Enter your Task')),
+                                      DateTimeFormField(
+                                        decoration:
+                                            kTextFieldDecoration.copyWith(
+                                                hintText: 'Enter Due Date'),
+                                        mode:
+                                            DateTimeFieldPickerMode.dateAndTime,
+                                        autovalidateMode:
+                                            AutovalidateMode.always,
+                                        validator: (e) => (e?.day ?? 0) == 1
+                                            ? 'Please not the first day'
+                                            : null,
+                                        onDateSelected: (DateTime value) {
+                                          dueDate = value;
+                                        },
+                                      )
+                                    ],
+                                  )))
                         ])),
                 GestureDetector(
                     onTap: () {
@@ -134,6 +151,7 @@ class _HomeState extends State<Home> {
                       }).catchError((onError) {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(onError)));
+                        taskController.clear();
                       });
                     },
                     child: Container(
