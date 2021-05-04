@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
+import 'package:uuid/uuid.dart';
 
 final db = FirebaseFirestore.instance;
 final _formKey = GlobalKey<FormState>();
 final taskController = TextEditingController();
+
+var uuid = Uuid();
 
 User loggedinUser;
 String loggedinUserEmail;
@@ -144,7 +147,8 @@ class _HomeState extends State<Home> {
                           .set({
                         'title': task,
                         'time': new DateTime.now(),
-                        'due date': dueDate
+                        'due date': dueDate,
+                        'id': uuid.v4()
                       }).then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Successfully Added')));
@@ -166,9 +170,22 @@ class _HomeState extends State<Home> {
                         height: 50,
                         child: Text('Add New Task',
                             style: TextStyle(color: Colors.white)))),
-                Column(
-                  children: [],
-                )
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'tasks');
+                    },
+                    child: Container(
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 2, color: Colors.green),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0))),
+                        alignment: Alignment.center,
+                        width: 200,
+                        height: 50,
+                        child: Text('See Your Tasks',
+                            style: TextStyle(color: Colors.white))))
               ],
             )),
       ),

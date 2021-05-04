@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'welcome.dart';
 import 'home.dart';
@@ -13,17 +12,17 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: 'welcome_screen',
       routes: {
-        'welcome_screen': (context) => Welcome(),
-        'registration_screen': (context) => Registration(),
-        'login_screen': (context) => Login(),
-        'home_screen': (context) => Home()
+        'tasks': (context) => Tasks(),
+        'welcome': (context) => Welcome(),
+        'register': (context) => Registration(),
+        'login': (context) => Login(),
+        'home': (context) => Home()
       },
     );
   }
