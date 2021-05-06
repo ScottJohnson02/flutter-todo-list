@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'home.dart';
+final db = FirebaseFirestore.instance;
 String loggedinUserEmail;
 
 class Tasks extends StatefulWidget {
@@ -15,9 +18,32 @@ class _TasksState extends State<Tasks> {
   getExpenseItems(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data.docs
         .map((doc) => new ListTile(
+            leading: new IconButton(
+                icon: Icon(CupertinoIcons.pencil),
+                onPressed: (){
+
+
+                }),  //add icon with gesture detector that updates
             title: new Text("${doc['title']}"),
-            subtitle: new Text("${doc['time']}"),
-            trailing: new Text('Update / Delete')))
+            trailing: new IconButton(
+              icon: new Icon(CupertinoIcons.trash),
+              onPressed: (){
+                db
+                    .collection('users')
+                    .doc(widget.id)
+                    .collection('tasks')
+                    .doc(doc['title'])
+                    .delete().then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Successfully Deleted')));
+                }).catchError((onError) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(onError)));
+                  taskController.clear();
+                });
+
+              },
+            ))) //add icon that removes from db
         .toList();
   }
 
@@ -50,16 +76,16 @@ class _TasksState extends State<Tasks> {
           backgroundColor: Colors.green,
           title: Text('Tasks Page'),
         ),
-        body: Center(
-            child: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Container(
-              height: 25000,
               child: Column(
                 children: [
 
                   _showDrivers()
                 ],
-              )),
-        )));
+              ),
+          ),
+        ),
+    );
   }
 }
