@@ -15,16 +15,39 @@ class Tasks extends StatefulWidget {
 }
 
 class _TasksState extends State<Tasks> {
+
+  bool isEditable=false;
   getExpenseItems(AsyncSnapshot<QuerySnapshot> snapshot) {
+
     return snapshot.data.docs
         .map((doc) => new ListTile(
             leading: new IconButton(
                 icon: Icon(CupertinoIcons.pencil),
-                onPressed: (){
+                onPressed: () {
+                  setState(() => {
+                    isEditable = true,
+                  });
 
 
-                }),  //add icon with gesture detector that updates
-            title: new Text("${doc['title']}"),
+                }),
+            title: new Expanded(
+                child: !isEditable
+                    ? Text(doc['title'])
+                    : TextFormField(
+                    initialValue: doc['title'],
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (value) {
+                      //TODO: change doc[title] property or get data from db and use that as initial value
+                      print("${doc["title"]}");
+                      db
+                      .collection('users')
+                          .doc(widget.id)
+                          .collection('tasks')
+                          .doc(doc['title'])
+                      .update({"title":value});
+                      print("${doc["title"]}");
+                      setState(() => {isEditable = false});
+                    })),
             trailing: new IconButton(
               icon: new Icon(CupertinoIcons.trash),
               onPressed: (){
@@ -76,7 +99,7 @@ class _TasksState extends State<Tasks> {
           backgroundColor: Colors.green,
           title: Text('Tasks Page'),
         ),
-        body: SingleChildScrollView(
+        body: Container(
           child: Container(
               child: Column(
                 children: [
